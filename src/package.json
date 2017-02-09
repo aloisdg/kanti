@@ -1,0 +1,22 @@
+{
+  "name": "kanti",
+  "version": "0.1.0",
+  "description": "We make your data sing",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aloisdg/kanti.git"
+  },
+  "keywords": [
+    "pvoutput"
+  ],
+  "author": "aloisdg",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/aloisdg/kanti/issues"
+  },
+  "homepage": "https://github.com/aloisdg/kanti#readme"
+}
