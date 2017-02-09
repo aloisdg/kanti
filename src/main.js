@@ -1,7 +1,8 @@
-function music32FloatArray (real) {
+function music32FloatArray (floatList) {
   console.log("1");
   var audioContext = new AudioContext();
   var osc = audioContext.createOscillator();
+  var real = new Float32Array(floatList);
   var imag = new Float32Array(real.length);
   console.log("2-0");
   var hornTable = audioContext.createPeriodicWave(real, imag);
@@ -21,11 +22,18 @@ $.get('/sun.csv')
 
     let tab = data.split('\n').map(line => line.split(','));
     tab.shift();
+
+  //  console.log("Grid length " + tab[0])
+    const grid2 = tab[0].map(function(col, i) {
+    return tab.map(function(row) {
+        return row[i];
+    }); });
+//    console.log("Grid 2" + grid2[0]);
     const floatTab = tab.map(line => line.map(cell => parseFloat(cell)));
 
 
 
-    music32FloatArray(floatTab[0]);
+    music32FloatArray(floatTab[1]);
   })
   .fail(function() {
     console.log('fail');
