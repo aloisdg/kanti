@@ -1,5 +1,5 @@
-date, Energy Generated,Energy Used,Average Generation,Lowest Generation,Highest Generation,CO2 Emissions Saved
-08:02:17,160.380 115.861, 72.24 ,13.888,0.000,5.890,171.607
+date, Energy Generated,Energy Used,percent Energy Used,Average Generation,Lowest Generation,Highest Generation,CO2 Emissions Saved
+08:02:17,160.380,115.861, 72.24 ,13.888,0.000,5.890,171.607
 07:02:17,158.590,110.956, 69.96 ,13.541,0.000,4.735,169.691
 06:02:17,160.008,116.775, 72.98 ,13.521,0.000,6.076,171.209
 05:02:17,161.822,111.035, 68.62 ,13.595,0.000,5.409,173.150

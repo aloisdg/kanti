@@ -18,5 +18,7 @@
   "bugs": {
     "url": "https://github.com/aloisdg/kanti/issues"
   },
-  "homepage": "https://github.com/aloisdg/kanti#readme"
+  "homepage": "https://github.com/aloisdg/kanti#readme",
+  "dependencies": {
+  }
 }
