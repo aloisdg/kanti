@@ -28,7 +28,6 @@ function playData() {
 //    console.log("Grid 2" + grid2[0]);
     const floatTab = tab.map(line => line.map(cell => parseFloat(cell)));
     music32FloatArray(floatTab[1]);
-    
 }
 
 $('#play-input').addEventListener("click", playData);
