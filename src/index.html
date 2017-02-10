@@ -4,8 +4,39 @@
 
   </head>
   <body>
+    <input type="file" id="file-input" />
+    <input type="button" id="play-input" value="Play" disabled="disabled" />
+    <h3>Contents of the file:</h3>
+    <pre id="file-content"></pre>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+  let $ = document.querySelector.bind(document);
+  let $$ = document.querySelectorAll.bind(document);
+</script>
 	<script src="main.js"></script>
+  <script>
+
+  function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    displayContents(contents);
+    $('#play-input').disabled = false;
+  };
+  reader.readAsText(file);
+}
+
+function displayContents(contents) {
+  var element = $('#file-content');
+  element.innerHTML = contents;
+}
+
+$('#file-input').addEventListener('change', readSingleFile, false);
+
+  </script>
   </body>
 </html>

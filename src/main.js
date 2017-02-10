@@ -16,9 +16,9 @@ function music32FloatArray (floatList) {
   console.log("3");
 }
 
-$.get('/sun.csv')
-  .done(function(data) {
-    //console.log(data);
+function playData() {
+  let data = $('#file-content').innerHTML;
+    console.log(data);
 
     let tab = data.split('\n').map(line => line.split(','));
     tab.shift();
@@ -27,10 +27,8 @@ $.get('/sun.csv')
     const grid2 = tab[0].map((col, i) => tab.map((row) => row[i]));
 //    console.log("Grid 2" + grid2[0]);
     const floatTab = tab.map(line => line.map(cell => parseFloat(cell)));
-
-
     music32FloatArray(floatTab[1]);
-  })
-  .fail(function() {
-    console.log('fail');
-  });
+    
+}
+
+$('#play-input').addEventListener("click", playData);
