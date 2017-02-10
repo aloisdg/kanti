@@ -16,8 +16,7 @@ function music32FloatArray (floatList) {
   console.log("3");
 }
 
-$('#play-input').addEventListener("click", ()=>{
-
+function playData() {
   let data = $('#file-content').innerHTML;
     console.log(data);
 
@@ -28,7 +27,8 @@ $('#play-input').addEventListener("click", ()=>{
     const grid2 = tab[0].map((col, i) => tab.map((row) => row[i]));
 //    console.log("Grid 2" + grid2[0]);
     const floatTab = tab.map(line => line.map(cell => parseFloat(cell)));
-
-
     music32FloatArray(floatTab[1]);
-  });
+    
+}
+
+$('#play-input').addEventListener("click", playData);
