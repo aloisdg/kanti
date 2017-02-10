@@ -16,9 +16,10 @@ function music32FloatArray (floatList) {
   console.log("3");
 }
 
-$.get('/sun.csv')
-  .done(function(data) {
-    //console.log(data);
+$('#play-input').addEventListener("click", ()=>{
+
+  let data = $('#file-content').innerHTML;
+    console.log(data);
 
     let tab = data.split('\n').map(line => line.split(','));
     tab.shift();
@@ -30,7 +31,4 @@ $.get('/sun.csv')
 
 
     music32FloatArray(floatTab[1]);
-  })
-  .fail(function() {
-    console.log('fail');
   });
