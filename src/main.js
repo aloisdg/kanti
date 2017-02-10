@@ -24,13 +24,9 @@ $.get('/sun.csv')
     tab.shift();
 
   //  console.log("Grid length " + tab[0])
-    const grid2 = tab[0].map(function(col, i) {
-    return tab.map(function(row) {
-        return row[i];
-    }); });
+    const grid2 = tab[0].map((col, i) => tab.map((row) => row[i]));
 //    console.log("Grid 2" + grid2[0]);
     const floatTab = tab.map(line => line.map(cell => parseFloat(cell)));
-
 
 
     music32FloatArray(floatTab[1]);
