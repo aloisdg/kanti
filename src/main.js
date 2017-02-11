@@ -4141,15 +4141,18 @@ function music32FloatArray (floatList) {
 }
 
 function playData() {
-  let data = $('#file-content').innerHTML;
-
-    let tab = data.split('\n').map(line => line.split(','));
-    tab.shift();
+//  let data = $('#file-content').innerText;
+var data = Array.prototype.map.call(document.querySelectorAll("tr"), function (tr) {
+  return Array.prototype.map.call(tr.querySelectorAll('td'), function (td) {
+    return td.innerHTML;
+  });
+});
+    data.shift();
+    let tab = data // data.split('\n').map(line => line.split(','));
 
     let grid2 = tab[0].map((col, i) => tab.map((row) => row[i]));
     grid2.shift()
     const floatTab = grid2.map(line => line.map(cell => parseFloat(cell)));
-
     music32FloatArray(floatTab[1]);
 }
 

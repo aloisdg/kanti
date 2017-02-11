@@ -9,6 +9,7 @@
     <h3>Contents of the file:</h3>
     <div id="file-content"></div>
 
+
 <script>
   let $ = document.querySelector.bind(document);
   let $$ = document.querySelectorAll.bind(document);
@@ -54,9 +55,8 @@ function displayContents(contents) {
  for (var i = 0; i < ths.length; i++) {
    ths[i].onclick = TestCall
  }
-
- //  var element = $('#file-content');
- // element.innerHTML = contents;
+// var element = $('#content');
+// element.innerHTML = contents;
 }
 
 $('#file-input').addEventListener('change', readSingleFile, false);
