@@ -7,7 +7,7 @@
     <input type="file" id="file-input" />
     <input type="button" id="play-input" value="Play" disabled="disabled" />
     <h3>Contents of the file:</h3>
-    <pre id="file-content"></pre>
+    <div id="file-content"></div>
 
 <script>
   let $ = document.querySelector.bind(document);
@@ -30,9 +30,33 @@
   reader.readAsText(file);
 }
 
+function TestCall(event, other) {
+  console.log(event);
+  console.log(other);
+}
+
 function displayContents(contents) {
-  var element = $('#file-content');
-  element.innerHTML = contents;
+         var lines = contents.split("\n"),
+         output = [],
+         i;
+         output.push("<thead><tr><th>"
+         + lines[0].slice(0,-1).split(",").join("</th><th>")
+         + "</th></tr></thead>");
+         for (i = 1; i < lines.length; i++)
+           output.push("<tr><td>"
+           + lines[i].slice(0,-1).split(",").join("</td><td>")
+           + "</td></tr>");
+ output = "<table>" + output.join("") + "</table>";
+ var div = document.getElementById('file-content');
+ div.innerHTML = output;
+ var ths = document.getElementsByTagName("th");
+ console.log("ths " + ths);
+ for (var i = 0; i < ths.length; i++) {
+   ths[i].onclick = TestCall
+ }
+
+ //  var element = $('#file-content');
+ // element.innerHTML = contents;
 }
 
 $('#file-input').addEventListener('change', readSingleFile, false);
