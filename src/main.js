@@ -1,35 +1,38 @@
-  var osc = audioContext.createOscillator();
 
+var audioContext = new AudioContext();
+var osc = audioContext.createOscillator();
 var varCounter = 0;
 var varName = function(list){
-     if(varCounter <= list) {
-          varCounter++;
+     if(varCounter < list.length) {
         osc.frequency.value = list[varCounter];
+        varCounter++;
      } else {
           clearInterval(varName);
+          osc.stop();
+          varCounter = 0;
      }
 };
 
 function music32FloatArray (floatList) {
-  var audioContext = new AudioContext();
-  var real = new Float32Array(floatList);
+
+  // Horn Sound.
+  var real = new Float32Array([0,0.4,0.4,1,1,1,0.3,0.7,0.6,0.5,0.9,0.8]);
   var imag = new Float32Array(real.length);
   var hornTable = audioContext.createPeriodicWave(real, imag);
 
   osc = audioContext.createOscillator();
   osc.setPeriodicWave(hornTable);
 
-setInterval(varName(floatList), 1000);
-
+  setInterval(() => varName(floatList), 500);
 
 
   osc.connect(audioContext.destination);
+  osc.frequency.value = floatList[varCounter];
   osc.start(0);
 }
 
 function playData() {
   let data = $('#file-content').innerHTML;
-    console.log(data);
 
     let tab = data.split('\n').map(line => line.split(','));
     tab.shift();
