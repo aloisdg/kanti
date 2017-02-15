@@ -1,11 +1,31 @@
+let csv = (function () {
+  let buildHeader = function (line) {
+    return "<thead><tr><th scope=\"col\"><button>"
+      + line.slice(0, -1).split(",").join("</button></th><th scope=\"col\"><button>")
+      + "</button></th></tr></thead>"
+  };
+	let buildAsHtml = function (lines) {
+      let output = [buildHeader(lines[0])];
+      for (let i = 1; i < lines.length; i++)
+        output.push("<tr><td>"
+          + lines[i].slice(0, -1).split(",").join("</td><td>")
+          + "</td></tr>");
+    return "<table>" + output.join("") + "</table>";
+	};
+
+	return {
+    buildAsHtml: buildAsHtml
+  };
+})();
+
 function readSingleFile(e) {
-    var file = e.target.files[0];
+    let file = e.target.files[0];
     if (!file) {
         return;
     }
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function(e) {
-        var contents = e.target.result;
+        let contents = e.target.result;
         displayContents(contents);
         $('#play-input').disabled = false;
     };
@@ -18,19 +38,8 @@ function TestCall(event, other) {
 }
 
 function displayContents(contents) {
-    var lines = contents.split("\n"),
-        output = [],
-        i;
-    output.push("<thead><tr><th scope=\"col\"><button>" +
-        lines[0].slice(0, -1).split(",").join("</button></th><th scope=\"col\"><button>") +
-        "</button></th></tr></thead>");
-    for (i = 1; i < lines.length; i++)
-        output.push("<tr><td>" +
-            lines[i].slice(0, -1).split(",").join("</td><td>") +
-            "</td></tr>");
-    output = "<table>" + output.join("") + "</table>";
     var div = document.getElementById('file-content');
-    div.innerHTML = output;
+    div.innerHTML = csv.buildAsHtml(contents.split("\n"));
     var ths = document.getElementsByTagName("th");
     console.log("ths " + ths);
     for (var i = 0; i < ths.length; i++) {
