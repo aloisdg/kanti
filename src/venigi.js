@@ -5,6 +5,9 @@
 // async/await
 // https://ponyfoo.com/articles/understanding-javascript-async-await
 
+// module pattern
+// http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
+
 const venigi = (() => {
     let get = async function (source) {
         return await fetch(source)
