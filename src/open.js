@@ -1,7 +1,7 @@
 let csv = (() => {
   let buildHeader = function (line) {
-    return "<thead><tr><th scope=\"col\"><button>"
-      + line.slice(0, -1).split(",").join("</button></th><th scope=\"col\"><button>")
+    return "<thead><tr><th scope=\"col\">"
+      + line.slice(0, -1).split(",").join("</button></th><th scope=\"col\"><button class=\"axis_y\">")
       + "</button></th></tr></thead>"
   };
 	let buildAsHtml = function (lines) {
@@ -21,10 +21,10 @@ let csv = (() => {
 function displayContents(contents) {
     var div = document.getElementById('file-content');
     div.innerHTML = csv.buildAsHtml(contents.split("\n"));
-    var ths = document.getElementsByTagName("th");
-    console.log("ths " + ths);
+    var ths = $$(".axis_y");
     for (var i = 0; i < ths.length; i++) {
-        ths[i].onclick = TestCall
+        ths[i].setAttribute('index', i);
+        ths[i].addEventListener('click', Selection.setNewIndexY);
     }
     // var element = $('#content');
     // element.innerHTML = contents;
