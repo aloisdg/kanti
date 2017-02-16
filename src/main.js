@@ -16,6 +16,10 @@ var varName = function (osc, list) {
         mediaRecorder.stop();
         osc.stop();
         varCounter = 0;
+        osc = audioContext.createOscillator();
+        dest = audioContext.createMediaStreamDestination();
+        mediaRecorder = new MediaRecorder(dest.stream);
+        osc.connect(dest);
      }
 };
 
@@ -79,10 +83,17 @@ function playData(e) {
     e.target.value = "Stop recording";
     clicked = true;
  } else {
-    mediaRecorder.requestData();
-    mediaRecorder.stop();
-    osc.stop(0);
-  }
+ clicked = false;
+       clearInterval(varName);
+        mediaRecorder.requestData();
+        mediaRecorder.stop();
+        osc.stop();
+        varCounter = 0;
+        osc = audioContext.createOscillator();
+        dest = audioContext.createMediaStreamDestination();
+        mediaRecorder = new MediaRecorder(dest.stream);
+        osc.connect(dest);
+       }
 }
 
 mediaRecorder.ondataavailable = function(evt) {
