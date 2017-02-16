@@ -1,27 +1,21 @@
-var audioContext = new AudioContext();
 var clicked = false;
 var chunks = [];
+
+var audioContext = new AudioContext();
 var osc = audioContext.createOscillator();
 var dest = audioContext.createMediaStreamDestination();
 var mediaRecorder = new MediaRecorder(dest.stream);
 var IDInterval;
 osc.connect(dest);
 
-var varCounter = 0;
-var varName = function (osc, list) {
-     console.log(varCounter);
-     if (varCounter < list.length) {
-        osc.frequency.value = list[varCounter];
-        varCounter++;
-     } else {
-        clearInterval(IDInterval);
-        mediaRecorder.requestData();
-        mediaRecorder.stop();
-        osc.stop();
-        varCounter = 0;
-        osc = audioContext.createOscillator();
-        dest = audioContext.createMediaStreamDestination();
-        mediaRecorder = new MediaRecorder(dest.stream);
+function reset() {
+  clicked = false;
+  clearInterval(IDInterval);
+  varCounter = 0;
+  audioContext = new AudioContext();
+  osc = audioContext.createOscillator();
+     dest = audioContext.createMediaStreamDestination();
+      mediaRecorder = new MediaRecorder(dest.stream);
         osc.connect(dest);
 mediaRecorder.ondataavailable = function(evt) {
   // push each chunk (blobs) in an array
@@ -36,6 +30,21 @@ mediaRecorder.onstop = function(evt) {
   //  var audioTag = document.createElement('audio');
   //  document.querySelector("audio").src = URL.createObjectURL(blob);
 };
+}
+
+var varCounter = 0;
+var varName = function (osc, list) {
+     console.log(varCounter);
+     if (varCounter < list.length) {
+        osc.frequency.value = list[varCounter];
+        varCounter++;
+     } else {
+      clicked = false;
+        clearInterval(IDInterval);
+        mediaRecorder.requestData();
+        mediaRecorder.stop();
+        osc.stop();
+        reset();
      }
 };
 
@@ -101,29 +110,10 @@ function playData(e) {
     clicked = true;
  } else {
  clicked = false;
-       clearInterval(IDInterval);
-        mediaRecorder.requestData();
+mediaRecorder.requestData();
         mediaRecorder.stop();
         osc.stop();
-        varCounter = 0;
-        osc = audioContext.createOscillator();
-        dest = audioContext.createMediaStreamDestination();
-        mediaRecorder = new MediaRecorder(dest.stream);
-        osc.connect(dest);
-mediaRecorder.ondataavailable = function(evt) {
-  // push each chunk (blobs) in an array
-  chunks.push(evt.data);
-};
-
-mediaRecorder.onstop = function(evt) {
-  // Make blob out of our blobs, and open it.
-  var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-  saveBlob(blob, "test.ogg");
-
-  //  var audioTag = document.createElement('audio');
-  //  document.querySelector("audio").src = URL.createObjectURL(blob);
-};
-
+        reset();
        }
 }
 
