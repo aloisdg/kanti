@@ -4,15 +4,17 @@ var chunks = [];
 var osc = audioContext.createOscillator();
 var dest = audioContext.createMediaStreamDestination();
 var mediaRecorder = new MediaRecorder(dest.stream);
+var IDInterval;
 osc.connect(dest);
 
 var varCounter = 0;
 var varName = function (osc, list) {
+     console.log(varCounter);
      if (varCounter < list.length) {
         osc.frequency.value = list[varCounter];
         varCounter++;
      } else {
-        clearInterval(varName);
+        clearInterval(IDInterval);
         mediaRecorder.requestData();
         mediaRecorder.stop();
         osc.stop();
@@ -88,7 +90,7 @@ function music32FloatArray (floatList) {
   mediaRecorder.start();
   osc.start(0);
 
-  setInterval(() => varName(osc, floatList), 500);
+ IDInterval = setInterval(() => varName(osc, floatList), 500);
   //}) ;
 }
 
@@ -99,7 +101,7 @@ function playData(e) {
     clicked = true;
  } else {
  clicked = false;
-       clearInterval(varName);
+       clearInterval(IDInterval);
         mediaRecorder.requestData();
         mediaRecorder.stop();
         osc.stop();
