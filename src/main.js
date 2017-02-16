@@ -28,12 +28,12 @@ var Selection =  {
     let grid2 = tab[0].map((col, i) => tab.map((row) => row[i]));
     grid2.shift()
     const floatTab = grid2.map(line => line.map(cell => parseFloat(cell)));
-    console.log(floatTab[Selection.axis_y]);
+
     music32FloatArray(floatTab[Selection.axis_y]);
   },
 
   setNewIndexY: function(button) {
-    Selection.axis_y = button.target.getAttribute('index') - 1;
+    Selection.axis_y = button.target.getAttribute('index');
   },
 };
 
