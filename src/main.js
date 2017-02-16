@@ -6,6 +6,8 @@ var varName = function(osc, list){
         varCounter++;
      } else {
           clearInterval(varName);
+          mediaRecorder.requestData();
+          mediaRecorder.stop();
           osc.stop();
           varCounter = 0;
      }
