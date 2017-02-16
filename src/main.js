@@ -13,7 +13,7 @@ var varName = function(osc, list){
 
 var Selection =  {
   axis_x:0, // valeur par default
-  axis_y:1, // default value
+  axis_y:0, // default value
 
   playData: function () {
   //  let data = $('#file-content').innerText;
@@ -28,11 +28,12 @@ var Selection =  {
     let grid2 = tab[0].map((col, i) => tab.map((row) => row[i]));
     grid2.shift()
     const floatTab = grid2.map(line => line.map(cell => parseFloat(cell)));
-    music32FloatArray(floatTab[1]);
+    console.log(floatTab[Selection.axis_y]);
+    music32FloatArray(floatTab[Selection.axis_y]);
   },
 
   setNewIndexY: function(button) {
-    console.log(button);
+    Selection.axis_y = button.target.getAttribute('index') - 1;
   },
 };
 
@@ -47,9 +48,10 @@ var Selection =  {
 function music32FloatArray (floatList) {
 
   // Horn Sound.
-  venigi.getJson("horn.json").then(tables => {
+  //venigi.getJson("horn.json").then(tables => {
   //  var real = new Float32Array(tables.real);
   //  var imag = new Float32Array(real.length);
+  const tables = HornRealImg;
   var c = tables.real.length;
   var real = new Float32Array(c);
   var imag = new Float32Array(c);
@@ -68,7 +70,7 @@ function music32FloatArray (floatList) {
   osc.frequency.value = floatList[varCounter];
   mediaRecorder.start();
   osc.start(0);
-  });
+  //}) ;
 }
 
 function playData(e) {
