@@ -95,13 +95,13 @@ function music32FloatArray (floatList) {
 }
 
 function playData(e) {
-  if (!clicked) {
-    Selection.playData();
-    e.target.value = "Stop recording";
-    clicked = true;
- } else {
- clicked = false;
-       clearInterval(IDInterval);
+    if (!clicked) {
+        Selection.playData();
+        e.target.value = "Stop recording";
+        clicked = true;
+    } else {
+        clicked = false;
+        clearInterval(IDInterval);
         mediaRecorder.requestData();
         mediaRecorder.stop();
         osc.stop();
@@ -110,29 +110,32 @@ function playData(e) {
         dest = audioContext.createMediaStreamDestination();
         mediaRecorder = new MediaRecorder(dest.stream);
         osc.connect(dest);
-mediaRecorder.ondataavailable = function(evt) {
-  // push each chunk (blobs) in an array
-  chunks.push(evt.data);
-};
 
-mediaRecorder.onstop = function(evt) {
-  // Make blob out of our blobs, and open it.
-  var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-  saveBlob(blob, "test.ogg");
+        mediaRecorder.ondataavailable = function(evt) {
+            // push each chunk (blobs) in an array
+            chunks.push(evt.data);
+            e.target.value = "Play";
+        };
 
-  //  var audioTag = document.createElement('audio');
-  //  document.querySelector("audio").src = URL.createObjectURL(blob);
-};
+        mediaRecorder.onstop = function(evt) {
+            // Make blob out of our blobs, and open it.
+            var blob = new Blob(chunks, {
+                'type': 'audio/ogg; codecs=opus'
+            });
+            saveBlob(blob, "test.ogg");
 
-       }
+            //  var audioTag = document.createElement('audio');
+            //  document.querySelector("audio").src = URL.createObjectURL(blob);
+        };
+    }
 }
 
-mediaRecorder.ondataavailable = function(evt) {
+mediaRecorder.ondataavailable = function (evt) {
   // push each chunk (blobs) in an array
   chunks.push(evt.data);
 };
 
-mediaRecorder.onstop = function(evt) {
+mediaRecorder.onstop = function (evt) {
   // Make blob out of our blobs, and open it.
   var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
   saveBlob(blob, "test.ogg");
