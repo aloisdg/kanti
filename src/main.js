@@ -21,6 +21,19 @@ var varName = function (osc, list) {
         dest = audioContext.createMediaStreamDestination();
         mediaRecorder = new MediaRecorder(dest.stream);
         osc.connect(dest);
+mediaRecorder.ondataavailable = function(evt) {
+  // push each chunk (blobs) in an array
+  chunks.push(evt.data);
+};
+
+mediaRecorder.onstop = function(evt) {
+  // Make blob out of our blobs, and open it.
+  var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+  saveBlob(blob, "test.ogg");
+
+  //  var audioTag = document.createElement('audio');
+  //  document.querySelector("audio").src = URL.createObjectURL(blob);
+};
      }
 };
 
@@ -66,9 +79,10 @@ function music32FloatArray (floatList) {
 
   var hornTable = audioContext.createPeriodicWave(real, imag);
 
+
   osc.setPeriodicWave(hornTable);
 
-  mediaRecorder = new MediaRecorder(audioContext.destination);
+//  mediaRecorder = new MediaRecorder(audioContext.destination);
   osc.connect(audioContext.destination);
   osc.frequency.value = floatList[varCounter];
   mediaRecorder.start();
@@ -94,6 +108,20 @@ function playData(e) {
         dest = audioContext.createMediaStreamDestination();
         mediaRecorder = new MediaRecorder(dest.stream);
         osc.connect(dest);
+mediaRecorder.ondataavailable = function(evt) {
+  // push each chunk (blobs) in an array
+  chunks.push(evt.data);
+};
+
+mediaRecorder.onstop = function(evt) {
+  // Make blob out of our blobs, and open it.
+  var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+  saveBlob(blob, "test.ogg");
+
+  //  var audioTag = document.createElement('audio');
+  //  document.querySelector("audio").src = URL.createObjectURL(blob);
+};
+
        }
 }
 
