@@ -2,9 +2,8 @@ var audioContext = new AudioContext();
 var clicked = false;
 var chunks = [];
 var osc = audioContext.createOscillator();
-var dest = audioContext.createMediaStreamDestination();
-var mediaRecorder = new MediaRecorder(dest.stream);
-osc.connect(dest);
+var mediaRecorder;
+// osc.connect(dest);
 
 var varCounter = 0;
 var varName = function (osc, list) {
@@ -66,6 +65,7 @@ function music32FloatArray (floatList) {
 
   setInterval(() => varName(osc, floatList), 500);
 
+  mediaRecorder = new MediaRecorder(audioContext.destination);
   osc.connect(audioContext.destination);
   osc.frequency.value = floatList[varCounter];
   mediaRecorder.start();
