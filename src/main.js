@@ -63,13 +63,13 @@ function music32FloatArray (floatList) {
 
   osc.setPeriodicWave(hornTable);
 
-  setInterval(() => varName(osc, floatList), 500);
-
   mediaRecorder = new MediaRecorder(audioContext.destination);
   osc.connect(audioContext.destination);
   osc.frequency.value = floatList[varCounter];
   mediaRecorder.start();
   osc.start(0);
+
+  setInterval(() => varName(osc, floatList), 500);
   //}) ;
 }
 
