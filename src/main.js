@@ -36,6 +36,14 @@ var Selection =  {
   },
 };
 
+  var audioContext = new AudioContext();
+       var clicked = false;
+            var chunks = [];
+  var osc = audioContext.createOscillator();
+       var dest = audioContext.createMediaStreamDestination();
+     var mediaRecorder = new MediaRecorder(dest.stream);
+     osc.connect(dest);
+
 function music32FloatArray (floatList) {
 
   // Horn Sound.
@@ -49,8 +57,7 @@ function music32FloatArray (floatList) {
     real[i] = tables.real[i];
     imag[i] = tables.imag[i];
   }
-  var audioContext = new AudioContext();
-  var osc = audioContext.createOscillator();
+
   var hornTable = audioContext.createPeriodicWave(real, imag);
 
   osc.setPeriodicWave(hornTable);
@@ -59,12 +66,36 @@ function music32FloatArray (floatList) {
 
   osc.connect(audioContext.destination);
   osc.frequency.value = floatList[varCounter];
+  mediaRecorder.start();
   osc.start(0);
-  }) ;
+  });
 }
 
-function playData() {
-  Selection.playData();
+function playData(e) {
+  if (!clicked) {
+    Selection.playData();
+    e.target.value = "Stop recording";
+    clicked = true;
+ } else {
+    mediaRecorder.requestData();
+    mediaRecorder.stop();
+    osc.stop(0);
+  }
 }
+
+mediaRecorder.ondataavailable = function(evt) {
+  // push each chunk (blobs) in an array
+  chunks.push(evt.data);
+};
+
+mediaRecorder.onstop = function(evt) {
+  // Make blob out of our blobs, and open it.
+  var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+  saveBlob(blob, "test.ogg");
+
+  //  var audioTag = document.createElement('audio');
+  //  document.querySelector("audio").src = URL.createObjectURL(blob);
+};
+
 
 $('#play-input').addEventListener("click", playData);
