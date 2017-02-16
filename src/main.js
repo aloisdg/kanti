@@ -1,19 +1,26 @@
+var audioContext = new AudioContext();
+var clicked = false;
+var chunks = [];
+var osc = audioContext.createOscillator();
+var dest = audioContext.createMediaStreamDestination();
+var mediaRecorder = new MediaRecorder(dest.stream);
+osc.connect(dest);
 
 var varCounter = 0;
-var varName = function(osc, list){
-     if(varCounter < list.length) {
+var varName = function (osc, list) {
+     if (varCounter < list.length) {
         osc.frequency.value = list[varCounter];
         varCounter++;
      } else {
-          clearInterval(varName);
-          mediaRecorder.requestData();
-          mediaRecorder.stop();
-          osc.stop();
-          varCounter = 0;
+        clearInterval(varName);
+        mediaRecorder.requestData();
+        mediaRecorder.stop();
+        osc.stop();
+        varCounter = 0;
      }
 };
 
-var Selection =  {
+var Selection = {
   axis_x:0, // valeur par default
   axis_y:0, // default value
 
@@ -39,16 +46,7 @@ var Selection =  {
   },
 };
 
-  var audioContext = new AudioContext();
-       var clicked = false;
-            var chunks = [];
-  var osc = audioContext.createOscillator();
-       var dest = audioContext.createMediaStreamDestination();
-     var mediaRecorder = new MediaRecorder(dest.stream);
-     osc.connect(dest);
-
 function music32FloatArray (floatList) {
-
   // Horn Sound.
   //venigi.getJson("horn.json").then(tables => {
   //  var real = new Float32Array(tables.real);
@@ -100,6 +98,5 @@ mediaRecorder.onstop = function(evt) {
   //  var audioTag = document.createElement('audio');
   //  document.querySelector("audio").src = URL.createObjectURL(blob);
 };
-
 
 $('#play-input').addEventListener("click", playData);
