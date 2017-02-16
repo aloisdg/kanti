@@ -2,8 +2,9 @@ var audioContext = new AudioContext();
 var clicked = false;
 var chunks = [];
 var osc = audioContext.createOscillator();
-var mediaRecorder;
-// osc.connect(dest);
+var dest = audioContext.createMediaStreamDestination();
+var mediaRecorder = new MediaRecorder(dest.stream);
+osc.connect(dest);
 
 var varCounter = 0;
 var varName = function (osc, list) {
