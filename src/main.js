@@ -19,6 +19,7 @@ function reset() {
         osc.connect(dest);
 mediaRecorder.ondataavailable = function(evt) {
   // push each chunk (blobs) in an array
+  $("#play-input").value = "Play";
   chunks.push(evt.data);
 };
 
@@ -104,6 +105,7 @@ function music32FloatArray (floatList) {
 }
 
 function playData(e) {
+
   if (!clicked) {
     Selection.playData();
     e.target.value = "Stop recording";
@@ -117,12 +119,14 @@ mediaRecorder.requestData();
        }
 }
 
-mediaRecorder.ondataavailable = function(evt) {
+mediaRecorder.ondataavailable = function (evt) {
   // push each chunk (blobs) in an array
+  $("#play-input").value = "Play";
+
   chunks.push(evt.data);
 };
 
-mediaRecorder.onstop = function(evt) {
+mediaRecorder.onstop = function (evt) {
   // Make blob out of our blobs, and open it.
   var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
   saveBlob(blob, "test.ogg");
