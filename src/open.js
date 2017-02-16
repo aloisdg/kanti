@@ -1,4 +1,4 @@
-let csv = (function () {
+let csv = (() => {
   let buildHeader = function (line) {
     return "<thead><tr><th scope=\"col\"><button>"
       + line.slice(0, -1).split(",").join("</button></th><th scope=\"col\"><button>")
@@ -10,7 +10,7 @@ let csv = (function () {
         output.push("<tr><td>"
           + lines[i].slice(0, -1).split(",").join("</td><td>")
           + "</td></tr>");
-    return "<table>" + output.join("") + "</table>";
+      return "<table>" + output.join("") + "</table>";
 	};
 
 	return {
