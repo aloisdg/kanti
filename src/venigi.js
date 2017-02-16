@@ -9,16 +9,28 @@
 // http://www.adequatelygood.com/JavaScript-Module-Pattern-In-Depth.html
 
 const venigi = (() => {
-    let get = async function (source) {
-        return await fetch(source)
-            .then(response => response.text())
-            .catch(err => console.error(err.message));
+    let get = async function (source, backup) {
+        try {
+            return await fetch(source)
+                .then(response => response.text())
+        }
+        catch (err) {
+            return await fetch(backup)
+                .then(response => response.text())
+                .catch(err => console.error(err.message));
+        }
     }
 
     let getJson = async function (source) {
-        return await fetch(source)
-            .then(response => response.json())
-            .catch(err => console.error(err.message));
+        try {
+            return await fetch(source)
+                .then(response => response.json())
+        }
+        catch (err) {
+            return await fetch(backup)
+                .then(response => response.json())
+                .catch(err => console.error(err.message));
+        }
     }
 
 	return {

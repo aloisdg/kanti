@@ -24,7 +24,7 @@
     }
     $('#file-input').addEventListener('change', readSingleFile, false);
     // demo of venigi:
-    // venigi.get('math.csv').then(txt => console.log(txt));
+    venigi.get('math.csv', 'https://raw.githubusercontent.com/aloisdg/kanti/master/src/math.csv').then(txt => console.log(txt));
   </script>
   </body>
 </html>
