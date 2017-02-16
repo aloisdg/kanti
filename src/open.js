@@ -18,25 +18,6 @@ let csv = (function () {
   };
 })();
 
-function readSingleFile(e) {
-    let file = e.target.files[0];
-    if (!file) {
-        return;
-    }
-    let reader = new FileReader();
-    reader.onload = function(e) {
-        let contents = e.target.result;
-        displayContents(contents);
-        $('#play-input').disabled = false;
-    };
-    reader.readAsText(file);
-}
-
-function TestCall(event, other) {
-    console.log(event);
-    console.log(other);
-}
-
 function displayContents(contents) {
     var div = document.getElementById('file-content');
     div.innerHTML = csv.buildAsHtml(contents.split("\n"));
@@ -47,4 +28,22 @@ function displayContents(contents) {
     }
     // var element = $('#content');
     // element.innerHTML = contents;
+}
+
+function readSingleFile(e) {
+    let file = e.target.files[0];
+    if (!file) {
+        return;
+    }
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        displayContents(e.target.result);
+        $('#play-input').disabled = false;
+    };
+    reader.readAsText(file);
+}
+
+function TestCall(event, other) {
+    console.log(event);
+    console.log(other);
 }
